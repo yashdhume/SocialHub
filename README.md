@@ -1,4 +1,4 @@
-# socialhub
+# Social Hub
 
 ## Project setup
 ```
