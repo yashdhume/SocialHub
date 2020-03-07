@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home'
+import SplashPage from './views/SplashPage'
 import RouterTemp from "@/views/RouterTemp";
 Vue.use(Router);
 
@@ -10,8 +10,8 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'Home',
-            component: Home
+            name: 'SplashPage',
+            component: SplashPage
         },
         {
             path: '/routerTemp',
