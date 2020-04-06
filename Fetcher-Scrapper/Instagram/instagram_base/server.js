@@ -1,12 +1,28 @@
 let express = require('express');
 let app = express();
 
-app.get('/', (request, response) => {
-	response.sendFile(__dirname + '/public/client.html');
+app.get('/instagram', (request, response) => {
+	response.sendFile(__dirname + '/public/instagramClient.html');
 });
 
-app.get('/client.js', (request, response) => {
-   response.sendFile(__dirname + '/client.js');
+app.get('/reddit', (request, response) => {
+	response.sendFile(__dirname + '/public/redditClient.html');
+});
+
+app.get('/youtube', (request, response) => {
+	response.sendFile(__dirname + '/public/youtubeClient.html');
+});
+
+app.get('/instagramClient.js', (request, response) => {
+   response.sendFile(__dirname + '/instagramClient.js');
+});
+
+app.get('/redditClient.js', (request, response) => {
+   response.sendFile(__dirname + '/redditClient.js');
+});
+
+app.get('/youtubeClient.js', (request, response) => {
+   response.sendFile(__dirname + '/youtubeClient.js');
 });
 
 app.get('/styles.css', (request, response) => {
