@@ -1,6 +1,5 @@
 let api_key = 'AIzaSyCKtQ8j5THMkk0fWdhz9NEFqnIpWg2guws';
 
-
 $(document).ready(function() {
 
     $('#searchButton').click(function() {

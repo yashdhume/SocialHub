@@ -1,3 +1,4 @@
+const {fullSearch} = require("./api/apis");
 
 function loadVariables(req, res, varNames){
     let missing = varNames.find(i => !req.query[i]);
@@ -18,11 +19,10 @@ function Endpoints(db) {
 
         let success = await db.logSearch(vars.name);
         if(!success){
-            res.send({ error: "Something went wrong. Search was not logged"});
-            return;
+            console.log("Error: Something went wrong. Search was not logged");
         }
 
-        res.send({ success: "Search was logged" });
+        res.send(await fullSearch(vars.name));
     };
 
     this.recentSearches = async (req, res) => {
