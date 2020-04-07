@@ -13,7 +13,7 @@
 
                         <v-col>
                             <v-btn class="ma-5" outlined>Get Started</v-btn>
-                            <v-btn class="ma-5" outlined>Lets go</v-btn>
+                            <v-btn class="ma-5" outlined to="/SearchPage">Lets go</v-btn>
                         </v-col>
                     </v-col>
                 </v-row>
