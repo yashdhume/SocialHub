@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 
 async function searchInstagram(accountName) {
     let accountData = await (await fetch(`https://www.instagram.com/${accountName}/?__a=1`)).json();
+    if(!accountData.graphql){ return null; }
 
     let posts = accountData.graphql.user.edge_owner_to_timeline_media.edges.map(i => ({
         link: i.node.display_url,

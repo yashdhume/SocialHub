@@ -14,6 +14,8 @@ async function fullSearch(name){
 
     for(let key of Object.keys(sites)){
         let data = await sites[key](name);
+        if(!data){ continue; }
+
         data.posts.forEach(i => { i.site = key });
 
         fullData.posts = fullData.posts.concat(data.posts);

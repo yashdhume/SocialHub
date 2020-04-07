@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 
 async function searchReddit(accountName) {
     let accountData = await (await fetch(`https://www.reddit.com/r/${accountName}.json`)).json();
+    if(!accountData.data){ return null; }
 
     let posts = accountData.data.children.map(i => ({
         link: i.data.url,

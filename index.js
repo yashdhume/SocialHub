@@ -16,9 +16,10 @@ client.connect().then(_ => {
 
     let endpoints = new Endpoints(db);
 
+    app.use(express.static(__dirname + "/dist"));
     app.use(cors());
 
-    app.get("/", (req, res) => res.send("vue js main page"));
+    app.get("/", (req, res) => res.sendFile("/index.html"));
     app.get("/search", endpoints.search);
     app.get("/userSettings", (req, res) => res.send("get the settings for a user of social hub (JSON format)"));
     app.get("/recentSearches", endpoints.recentSearches);
