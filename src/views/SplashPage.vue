@@ -16,7 +16,7 @@
                 appBarBtns: [
                     {
                         text: "Login",
-                        route: "/routerTemp",
+                        route: "/loginPage",
                     },
                     {
                         text: "Sign Up",
