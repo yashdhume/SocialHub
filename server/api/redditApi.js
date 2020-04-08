@@ -7,7 +7,7 @@ async function searchReddit(accountName) {
     let posts = accountData.data.children.map(i => ({
         image: i.data.url,
         caption: i.data.title,
-        timestamp: i.data.created_utc,
+        timestamp: i.data.created_utc * 1000,
     }));
 
     return {
