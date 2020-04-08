@@ -5,7 +5,7 @@ async function searchInstagram(accountName) {
     if(!accountData.graphql){ return null; }
 
     let posts = accountData.graphql.user.edge_owner_to_timeline_media.edges.map(i => ({
-        link: i.node.display_url,
+        image: i.node.display_url,
         caption: i.node.edge_media_to_caption.edges[0].node.text,
         timestamp: i.node.taken_at_timestamp,
     }));

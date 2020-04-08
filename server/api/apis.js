@@ -2,8 +2,8 @@ const {searchInstagram} = require("./instagramApi");
 const {searchReddit} = require("./redditApi");
 
 let sites = {
-    "reddit": searchReddit,
-    "instagram": searchInstagram,
+    "Reddit": searchReddit,
+    "Instagram": searchInstagram,
 };
 
 async function fullSearch(name){

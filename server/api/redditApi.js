@@ -5,7 +5,7 @@ async function searchReddit(accountName) {
     if(!accountData.data){ return null; }
 
     let posts = accountData.data.children.map(i => ({
-        link: i.data.url,
+        image: i.data.url,
         caption: i.data.title,
         timestamp: i.data.created_utc,
     }));

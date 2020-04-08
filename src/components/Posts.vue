@@ -29,7 +29,7 @@
                         </v-list-item-content>
                     </v-list-item>
                     <v-img
-                            :src="i.link"
+                            :src="i.image"
                             contain
                     ></v-img>
 
