@@ -4,7 +4,6 @@ async function searchReddit(accountName) {
     let accountData = await (await fetch(`https://www.reddit.com/r/${accountName}.json`)).json();
     if(!accountData.data){ return null; }
 
-    console.log(accountData.data.children[0]);
 
     let posts = accountData.data.children.map(i => ({
         link: "https://www.reddit.com" + i.data.permalink,

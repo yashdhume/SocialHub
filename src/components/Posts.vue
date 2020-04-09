@@ -13,18 +13,20 @@
                     min-height="100"
                     transition="fab-transition"
             >
+
                 <v-card
+                        :href="i.link"
                         light
                         max-width="600"
                         class="mx-auto"
                 >
                     <v-list-item>
                         <v-list-item-avatar >
-                            <!--                    <v-img src="https://scontent-ort2-2.cdninstagram.com/v/t51.2885-19/s320x320/54511895_268031237473443_8504595524563763200_n.jpg?_nc_ht=scontent-ort2-2.cdninstagram.com&_nc_ohc=07fcHIwe_8MAX_clN9P&oh=4f8736a8f292643053bc91e6f257e370&oe=5EB6FCB3"></v-img>-->
                             <v-icon large :color="getIcon(i.site)[1]">{{getIcon(i.site)[0]}}</v-icon>
                         </v-list-item-avatar>
                         <v-list-item-content>
                             <v-list-item-title class="title">{{i.site}}</v-list-item-title>
+                            <v-list-item-subtitle class="subtitle-1">{{getTime(new Date(i.timestamp))}}</v-list-item-subtitle>
 
                         </v-list-item-content>
                     </v-list-item>
@@ -50,13 +52,42 @@
             data : Array
         },
         methods:{
+            getTime:(time)=> {
+                const timeDiff = new Date().getTime() - time;
 
+                if (timeDiff < 60000) {
+                    return Math.round(timeDiff/1000) + ' seconds ago';
+                }
+
+                else if (timeDiff < 3600000) {
+                    return Math.round(timeDiff/60000) + ' minutes ago';
+                }
+
+                else if (timeDiff < 86400000 ) {
+                    return Math.round(timeDiff/3600000 ) + ' hours ago';
+                }
+
+                else if (timeDiff < 2592000000) {
+                    return  Math.round(timeDiff/86400000) + ' days ago';
+                }
+
+                else if (timeDiff < 946080000000) {
+                    return Math.round(timeDiff/2592000000) + ' months ago';
+                }
+
+                else {
+                    return Math.round(timeDiff/946080000000 ) + ' years ago';
+                }
+            },
             getIcon:(str)=> {
-                if(str==="instagram"){
+                if(str==="Instagram"){
                     return ["fab fa-instagram", "pink"]
                 }
-                else if (str==="reddit"){
+                else if (str==="Reddit"){
                     return ["fab fa-reddit", "red"]
+                }
+                else if(str==="Youtube"){
+                    return ["fab fa-youtube", "red"]
                 }
             }
         },
