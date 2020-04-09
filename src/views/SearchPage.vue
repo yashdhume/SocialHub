@@ -1,22 +1,27 @@
 <template>
     <v-app style="background: linear-gradient(130deg, #FF0099, #493240);">
         <AppBar :appBarBtns="appBarBtns"></AppBar>
-        <v-container style="width: 620px">
-            <section v-if="isSearchesLoaded">
-                <v-combobox
-                        :items="searches"
-                        label="Search"
-                        solo
-                        light
-                        persistent-hint="true"
-                        v-model="searchQuery"
-                        v-on:keyup.enter="getData"
-                        prepend-inner-icon="mdi-magnify"
-                ></v-combobox>
-            </section>
-        </v-container>
+        <section v-if="isSearchesLoaded">
+            <v-container style="width: 620px">
+                <v-row align="center">
+                    <v-combobox
+                            :items="isFavorite ?searches:favorites.data"
+                            label="Search"
+                            solo
+                            light
+                            persistent-hint="true"
+                            v-model="searchQuery"
+                            v-on:keyup.enter="getData"
+                            prepend-inner-icon="mdi-magnify"
+                    >
+                    </v-combobox>
+                    <v-icon v-on:click="changeFav" :color="isFavorite ? 'white' : 'blue'">fas fa-star</v-icon>
+                </v-row>
+            </v-container>
+        </section>
+
         <section v-if="isDataLoaded">
-            <ProfileInfo :data="profileInfo"></ProfileInfo>
+            <ProfileInfo :data="profileInfo" :search="searchQuery"></ProfileInfo>
             <Posts :data="posts"></Posts>
         </section>
 
@@ -35,8 +40,20 @@
         components: {AppBar, Posts, ProfileInfo},
         created (){
             this.getRecentSearches()
+            this.favorite()
         },
         methods:{
+            changeFav: function(){
+              this.isFavorite = !this.isFavorite;
+            },
+            favorite: function(){
+                axios
+                    .get(`http://localhost:3000/getFavorites?username=yash`)
+                    .then(r=>{
+                        this.favorites = r;
+                        this.isFavorite=true;
+                    });
+            },
             getRecentSearches: function(){
                 axios
                     .get(`http://localhost:3000/recentSearches?amount=100`)
@@ -58,6 +75,8 @@
             },
         },
         data: ()=>({
+            isFavorite: false,
+            favorites: [],
             searches: [],
             isSearchesLoaded: false,
             searchQuery:'',
