@@ -28,7 +28,7 @@
     export default {
         name: "ChatBox",
         data: () => ({
-            socket: new WebSocket("ws://localhost:3001"),
+            socket: new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host),
             message: {
                 text: "",
                 received: true

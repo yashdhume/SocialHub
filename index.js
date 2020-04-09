@@ -1,13 +1,15 @@
-const express = require('express');
-const app = express();
 const cors = require('cors');
 const {MongoClient} = require('mongodb');
 const {Endpoints} = require("./server/Endpoints");
 const {ChatServer} = require("./server/ChatServer");
 const {Database} = require("./server/Database");
 const WebSocket = require('ws');
+const express = require('express');
+const http = require('http');
 
-const port = 3000;
+const port = process.env.PORT || 3000;
+const app = express();
+const httpServer = http.createServer(app);
 
 //const uri = "mongodb://localhost:27017/";
 const uri = "mongodb+srv://SocialHubApp:pass123@socialhub-7ehye.mongodb.net/test?retryWrites=true&w=majority";
@@ -19,7 +21,7 @@ client.connect().then(_ => {
 
     let endpoints = new Endpoints(db);
 
-    const wss = new WebSocket.Server({ port: 3001 });
+    const wss = new WebSocket.Server({ 'server': httpServer });
     let chatServer = new ChatServer(wss);
 
     app.use(express.static(__dirname + "/dist"));
@@ -35,5 +37,6 @@ client.connect().then(_ => {
     app.get("/addFavorite", endpoints.addFavorite);
     app.get("/removeFavorite", endpoints.removeFavorite);
 
-    app.listen(port, () => console.log("Example app listening on port "+port));
+    httpServer.listen(port);
+    console.log("App listening on port "+port);
 });
