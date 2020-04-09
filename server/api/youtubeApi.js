@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const {youtubeKey} = require("../configuration");
+
 async function searchYoutube(accountName){
     let getAccount= await (await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&forUsername=${accountName}&key=${youtubeKey}`)).json();
     let accountId= getAccount.items[0].id;

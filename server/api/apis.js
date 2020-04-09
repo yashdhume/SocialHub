@@ -1,6 +1,7 @@
 const {searchInstagram} = require("./instagramApi");
 const {searchReddit} = require("./redditApi");
 const {searchYoutube} = require("./youtubeApi");
+
 let sites = {
     "Reddit": searchReddit,
     "Instagram": searchInstagram,

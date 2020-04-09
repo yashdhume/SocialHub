@@ -24,5 +24,10 @@ client.connect().then(_ => {
     app.get("/userSettings", (req, res) => res.send("get the settings for a user of social hub (JSON format)"));
     app.get("/recentSearches", endpoints.recentSearches);
 
+    app.get("/createUser", endpoints.createUser);
+    app.get("/getFavorites", endpoints.getFavorites);
+    app.get("/addFavorite", endpoints.addFavorite);
+    app.get("/removeFavorite", endpoints.removeFavorite);
+
     app.listen(port, () => console.log("Example app listening on port "+port));
 });
