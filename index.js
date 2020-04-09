@@ -9,7 +9,8 @@ const WebSocket = require('ws');
 
 const port = 3000;
 
-const uri = "mongodb://localhost:27017/";
+//const uri = "mongodb://localhost:27017/";
+const uri = "mongodb+srv://SocialHubApp:pass123@socialhub-7ehye.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 client.connect().then(_ => {
