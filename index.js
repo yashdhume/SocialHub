@@ -3,7 +3,9 @@ const app = express();
 const cors = require('cors');
 const {MongoClient} = require('mongodb');
 const {Endpoints} = require("./server/Endpoints");
+const {ChatServer} = require("./server/ChatServer");
 const {Database} = require("./server/Database");
+const WebSocket = require('ws');
 
 const port = 3000;
 
@@ -15,6 +17,9 @@ client.connect().then(_ => {
     console.log("Connected to MongoDB");
 
     let endpoints = new Endpoints(db);
+
+    const wss = new WebSocket.Server({ port: 3001 });
+    let chatServer = new ChatServer(wss);
 
     app.use(express.static(__dirname + "/dist"));
     app.use(cors());

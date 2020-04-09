@@ -28,12 +28,12 @@
     export default {
         name: "ChatBox",
         data: () => ({
+            socket: new WebSocket("ws://localhost:3001"),
             message: {
                 text: "",
                 received: true
             },
-            messages: [{text: "TEST", send: false},{text: "HELLO", send: false},{text: "TEST", send: false},{text: "HELLO", send: true}],
-
+            messages: []
         }),
         methods:{
             sendMessage(){
@@ -41,7 +41,19 @@
                     text: this.message.text,
                     send: true
                 });
+                this.socket.send(this.message.text);
+            },
+            connectToChat(){
+                this.socket.onmessage = ev => {
+                    this.messages.push({
+                        text: ev.data,
+                        send: false
+                    });
+                }
             }
+        },
+        created(){
+            this.connectToChat();
         }
     }
 </script>
