@@ -3,16 +3,16 @@
         <AppBar :appBarBtns="appBarBtns"></AppBar>
         <v-container style="width: 620px">
             <section v-if="isSearchesLoaded">
-            <v-combobox
-                    :items="searches"
-                    label="Search"
-                    solo
-                    light
-                    persistent-hint="true"
-                    v-model="searchQuery"
-                    v-on:keyup.enter="getData"
-                    prepend-inner-icon="mdi-magnify"
-            ></v-combobox>
+                <v-combobox
+                        :items="searches"
+                        label="Search"
+                        solo
+                        light
+                        persistent-hint="true"
+                        v-model="searchQuery"
+                        v-on:keyup.enter="getData"
+                        prepend-inner-icon="mdi-magnify"
+                ></v-combobox>
             </section>
         </v-container>
         <section v-if="isDataLoaded">
@@ -34,19 +34,18 @@
         name: "SearchPage",
         components: {AppBar, Posts, ProfileInfo},
         created (){
-          this.getRecentSearches()
+            this.getRecentSearches()
         },
         methods:{
             getRecentSearches: function(){
-              axios
-                  .get(`http://localhost:3000/recentSearches?amount=100`)
-                  .then(r=>{
-                      this.isSearchesLoaded=true;
-                      r.data.forEach((data)=> {
-                          this.searches.push(data.search);
-
-                      });
-                  });
+                axios
+                    .get(`http://localhost:3000/recentSearches?amount=100`)
+                    .then(r=>{
+                        this.isSearchesLoaded=true;
+                        r.data.forEach((data)=> {
+                            this.searches.push(data.search);
+                        });
+                    });
             },
             getData: function(){
                 axios
@@ -84,5 +83,4 @@
 </script>
 
 <style scoped>
-
 </style>
