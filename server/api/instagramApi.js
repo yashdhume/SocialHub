@@ -11,7 +11,7 @@ async function searchInstagram(accountName) {
     let posts = accountData.graphql.user.edge_owner_to_timeline_media.edges.map(i => ({
         link: "https://www.instagram.com/p/" + i.node.shortcode,
         image: i.node.display_url,
-        caption: i.node.edge_media_to_caption.edges[0].node.text,
+        caption: i.node.edge_media_to_caption.edges.length===0 ? "No Caption" : i.node.edge_media_to_caption.edges[0].node.text,
         timestamp: i.node.taken_at_timestamp * 1000,
     }));
 
