@@ -33,39 +33,39 @@ function Endpoints(db) {
     };
 
     this.createUser = async (req, res) => {
-        let vars = loadVariables(req, res, ["username"]);
+        let vars = loadVariables(req, res, ["username", "password"]);
         if(!vars){ return; }
 
-        let existing = await db.getUser(vars.username);
-        if(existing){
-            res.send({ error: "A user already exists with this username" });
-            return;
-        }
+        res.send(await db.createUser(vars.username, vars.password));
+    };
 
-        await db.createUser(vars.username);
-        res.send({ success: "User created successfully" });
+    this.signIn = async (req, res) => {
+        let vars = loadVariables(req, res, ["username", "password"]);
+        if(!vars){ return; }
+
+        res.send(await db.createToken(vars.username, vars.password));
     };
 
     this.getFavorites = async (req, res) => {
-        let vars = loadVariables(req, res, ["username"]);
+        let vars = loadVariables(req, res, ["token"]);
         if(!vars){ return; }
 
-        let user = await db.getUser(vars.username);
-        if(!user) {
-            res.send({error: "User does not exist"});
+        let user = await db.getUser(vars.token);
+        if(user.error) {
+            res.send(user);
             return;
         }
 
-        res.send(user.favorites);
+        res.send({success: user.favorites});
     };
 
     this.addFavorite = async (req, res) => {
-        let vars = loadVariables(req, res, ["username", "favorite"]);
+        let vars = loadVariables(req, res, ["token", "favorite"]);
         if(!vars){ return; }
 
-        let user = await db.getUser(vars.username);
-        if(!user){
-            res.send({ error: "User does not exist"});
+        let user = await db.getUser(vars.token);
+        if(user.error) {
+            res.send(user);
             return;
         }
 
@@ -80,16 +80,16 @@ function Endpoints(db) {
             return;
         }
 
-        res.send({ "success": "Favorite added successfully" });
+        res.send({ success: "Favorite added successfully" });
     };
 
     this.removeFavorite = async (req, res) => {
-        let vars = loadVariables(req, res, ["username", "favorite"]);
+        let vars = loadVariables(req, res, ["token", "favorite"]);
         if(!vars){ return; }
 
-        let user = await db.getUser(vars.username);
-        if(!user){
-            res.send({ error: "User does not exist"});
+        let user = await db.getUser(vars.token);
+        if(user.error) {
+            res.send(user);
             return;
         }
 
@@ -104,7 +104,7 @@ function Endpoints(db) {
             return;
         }
 
-        res.send({ "success": "Favorite removed successfully" });
+        res.send({ success: "Favorite removed successfully" });
     }
 }
 

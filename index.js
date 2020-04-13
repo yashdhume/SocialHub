@@ -29,10 +29,22 @@ client.connect().then(_ => {
 
     app.get("/", (req, res) => res.sendFile("/index.html"));
     app.get("/search", endpoints.search);
-    app.get("/userSettings", (req, res) => res.send("get the settings for a user of social hub (JSON format)"));
     app.get("/recentSearches", endpoints.recentSearches);
 
     app.get("/createUser", endpoints.createUser);
+    app.get("/signIn", endpoints.signIn);
+
+    //privileged access
+    app.use(function(req, res, next) {
+        if(!req.header("token")){
+            res.send({ error: "Token must be included in header for this action (token=)" });
+            return;
+        }
+        req.query.token = req.header("token");
+        next();
+    });
+
+    //privileged access
     app.get("/getFavorites", endpoints.getFavorites);
     app.get("/addFavorite", endpoints.addFavorite);
     app.get("/removeFavorite", endpoints.removeFavorite);

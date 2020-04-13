@@ -1,3 +1,9 @@
+const bcrypt = require('bcrypt');
+const { ObjectID } = require("mongodb");
+
+function calculateTokenValidTime() {
+    return new Date().getTime() + 1000 * 30; //30 seconds
+}
 
 function Database(db){
 
@@ -10,23 +16,64 @@ function Database(db){
         return Array.from(await db.collection("Searches").find().sort({ timestamp: -1 }).limit(searchCount).toArray());
     };
 
-    this.createUser = async (username) => {
-        let res = await db.collection("Users").insertOne({ username: username, favorites: []});
-        return res.result.ok === 1;
+    this.createUser = async (username, password) => {
+        let existing = await db.collection("Users").findOne({username: username});
+        if(existing){ return {error: "User already exists"}}
+
+        let hash = bcrypt.hashSync(password, 10);
+        await db.collection("Users").insertOne({username: username, passwordHash: hash, favorites: []});
+        return {"success": "User was created"};
     };
 
-    this.getUser = async (username) => {
-        return await db.collection("Users").findOne({ username: username })
+    this.createToken = async (username, password) => {
+        let res = await db.collection("Users").findOne({ username: username });
+        if(!res){ return {error: "User does not exist"}; }
+        if(!bcrypt.compareSync(password, res.passwordHash)){ return {error: "Bad login credentials" }}
+
+        //remove existing
+        await db.collection("Tokens").removeOne({ username: username });
+
+        await db.collection("Tokens").insertOne({username: username, validUntil: calculateTokenValidTime()});
+        res = await db.collection("Tokens").findOne({username: username});
+        if(!res){
+            return {error: "Something went wrong while generating a token"};
+        }
+        return {success: res._id};
     };
 
-    this.addFavorite = async (username, favorite) => {
-        let res = await db.collection("Users").updateOne({ username: username }, { $addToSet: { favorites: favorite }});
-        return res.result.ok === 1;
+    this.validateToken = async (token) => {
+        let existing = await db.collection("Tokens").findOne({ _id: ObjectID(token) });
+        if(!existing){ return {error: "Token does not exist"}; }
+        if(existing.validUntil > new Date().getTime()){ return {error: "Token has expired"}; }
+        await db.collection("Tokens").updateOne({ _id: ObjectID(token) }, { $set: { validUntil: calculateTokenValidTime() } });
+        return {success: existing.username};
     };
 
-    this.removeFavorite = async (username, favorite) => {
-        let res = await db.collection("Users").updateOne({ username: username }, { $pull: { favorites: favorite }});
-        return res.result.ok === 1;
+    this.getUser = async (token) => {
+        let valid = await this.validateToken(token);
+        if(valid.error){ return valid; }
+
+        let user = await db.collection("Users").find({username: valid});
+        if(!user){ return {error: "Something went wrong, user not found"}}
+        return {success: user};
+    };
+
+    this.addFavorite = async (token, favorite) => {
+        let user = this.getUser(token);
+        if(user.error){ return user; }
+
+        let res = await db.collection("Users").updateOne({ username: user.username }, { $addToSet: { favorites: favorite }});
+        if(!res){ return {error: "Something went wrong. Could not add favorite"} }
+        return {success: "Favorite was added"}
+    };
+
+    this.removeFavorite = async (token, favorite) => {
+        let user = this.getUser(token);
+        if(user.error){ return user; }
+
+        let res = await db.collection("Users").updateOne({ username: user.username }, { $pull: { favorites: favorite }});
+        if(!res){ return {error: "Something went wrong. Could not remove favorite"} }
+        return {success: "Favorite was removed"}
     }
 }
 
