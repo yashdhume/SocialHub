@@ -74,7 +74,7 @@ function Endpoints(db) {
             return;
         }
 
-        res.send(await db.addFavorite(vars.username, vars.favorite));
+        res.send(await db.addFavorite(vars.token, vars.favorite));
     };
 
     this.removeFavorite = async (req, res) => {
@@ -92,7 +92,7 @@ function Endpoints(db) {
             return;
         }
 
-        res.send(await db.removeFavorite(vars.username, vars.favorite));
+        res.send(await db.removeFavorite(vars.token, vars.favorite));
     }
 }
 

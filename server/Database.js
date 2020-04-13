@@ -59,7 +59,7 @@ function Database(db){
     };
 
     this.addFavorite = async (token, favorite) => {
-        let user = this.getUser(token);
+        let user = await this.getUser(token);
         if(user.error){ return user; }
 
         let res = await db.collection("Users").updateOne({ username: user.username }, { $addToSet: { favorites: favorite }});
@@ -68,7 +68,7 @@ function Database(db){
     };
 
     this.removeFavorite = async (token, favorite) => {
-        let user = this.getUser(token);
+        let user = await this.getUser(token);
         if(user.error){ return user; }
 
         let res = await db.collection("Users").updateOne({ username: user.username }, { $pull: { favorites: favorite }});
