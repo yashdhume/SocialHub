@@ -53,7 +53,7 @@ function Database(db){
         let valid = await this.validateToken(token);
         if(valid.error){ return valid; }
 
-        let user = await db.collection("Users").find({username: valid});
+        let user = await db.collection("Users").findOne({username: valid});
         if(!user){ return {error: "Something went wrong, user not found"}}
         return user;
     };
