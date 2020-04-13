@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import SplashPage from './views/SplashPage'
 import SearchPage from "@/views/SearchPage";
 import LoginPage from "@/views/LoginPage";
+import RegisterPage from "@/views/RegisterPage";
 Vue.use(Router);
 
 export default new Router({
@@ -23,6 +24,11 @@ export default new Router({
             path: '/loginPage',
             name: 'LoginPage',
             component: LoginPage
+        },
+        {
+            path: '/registerPage',
+            name: 'RegisterPage',
+            component: RegisterPage
         },
     ]
 })

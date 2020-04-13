@@ -5,7 +5,7 @@
             <v-container style="width: 620px">
                 <v-row align="center">
                     <v-combobox
-                            :items="isFavorite ?searches:favorites.data"
+                            :items="isFavorite ?searches:favorites"
                             label="Search"
                             solo
                             light
@@ -39,24 +39,25 @@
         name: "SearchPage",
         components: {AppBar, Posts, ProfileInfo},
         created (){
-            this.getRecentSearches()
+            this.getRecentSearches();
             this.favorite()
         },
         methods:{
             changeFav: function(){
-              this.isFavorite = !this.isFavorite;
+               // this.favorite();
+                this.isFavorite = !this.isFavorite;
             },
             favorite: function(){
                 axios
-                    .get(`/getFavorites?username=yash`)
+                    .get(`http://localhost:3000/getFavorites`, {headers:{'token': this.$store.getters.token}})
                     .then(r=>{
-                        this.favorites = r;
+                        this.favorites = r.data;
                         this.isFavorite=true;
                     });
             },
             getRecentSearches: function(){
                 axios
-                    .get(`/recentSearches?amount=100`)
+                    .get(`http://localhost:3000/recentSearches?amount=100`)
                     .then(r=>{
                         this.isSearchesLoaded=true;
                         r.data.forEach((data)=> {
@@ -66,7 +67,7 @@
             },
             getData: function(){
                 axios
-                    .get(`/search?name=${this.searchQuery}`)
+                    .get(`http://localhost:3000/search?name=${this.searchQuery}`)
                     .then(r=>{
                         this.posts=r.data.posts;
                         this.profileInfo=r.data.accountInfo;
@@ -78,6 +79,7 @@
             isFavorite: false,
             favorites: [],
             searches: [],
+            test: '',
             isSearchesLoaded: false,
             searchQuery:'',
             isDataLoaded: false,
@@ -86,11 +88,11 @@
             appBarBtns: [
                 {
                     text: "Login",
-                    route: "",
+                    route: "/loginPage",
                 },
                 {
                     text: "Sign Up",
-                    route: "",
+                    route: "/registerPage",
                 },
                 {
                     text: "About",

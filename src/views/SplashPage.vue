@@ -22,7 +22,7 @@
                     },
                     {
                         text: "Sign Up",
-                        route: "",
+                        route: "/registerPage",
                     },
                     {
                         text: "About",

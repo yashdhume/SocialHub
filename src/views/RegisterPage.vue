@@ -2,7 +2,7 @@
     <div id="app">
         <v-app id="inspire" style="background: linear-gradient(130deg, #FF0099, #493240);">
             <AppBar :appBarBtns="appBarBtns"></AppBar>
-            <LoginBox :is-register="false"></LoginBox>
+            <LoginBox :is-register="true"></LoginBox>
 
         </v-app>
     </div>

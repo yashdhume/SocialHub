@@ -54,7 +54,7 @@
         }),
         methods:{
             favorite: function() {
-                axios.get(`http://localhost:3000/addFavorite?username=yash&favorite=${this.search}`)
+                axios.get(`http://localhost:3000/addFavorite?&favorite=${this.search}`, {headers:{'token': this.$store.getters.token}})
             }
         }
     }
