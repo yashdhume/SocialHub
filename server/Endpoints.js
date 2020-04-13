@@ -56,7 +56,7 @@ function Endpoints(db) {
             return;
         }
 
-        res.send({success: user.favorites});
+        res.send(user.favorites);
     };
 
     this.addFavorite = async (req, res) => {
@@ -74,13 +74,7 @@ function Endpoints(db) {
             return;
         }
 
-        let success = await db.addFavorite(vars.username, vars.favorite);
-        if(!success){
-            res.send({ error: "Something went wrong. Favorite was not added" });
-            return;
-        }
-
-        res.send({ success: "Favorite added successfully" });
+        res.send(await db.addFavorite(vars.username, vars.favorite));
     };
 
     this.removeFavorite = async (req, res) => {
@@ -98,13 +92,7 @@ function Endpoints(db) {
             return;
         }
 
-        let success = await db.removeFavorite(vars.username, vars.favorite);
-        if(!success){
-            res.send({ error: "Something went wrong. Favorite was not removed" });
-            return;
-        }
-
-        res.send({ success: "Favorite removed successfully" });
+        res.send(await db.removeFavorite(vars.username, vars.favorite));
     }
 }
 

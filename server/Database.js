@@ -22,7 +22,7 @@ function Database(db){
 
         let hash = bcrypt.hashSync(password, 10);
         await db.collection("Users").insertOne({username: username, passwordHash: hash, favorites: []});
-        return {"success": "User was created"};
+        return {success: "User was created"};
     };
 
     this.createToken = async (username, password) => {
@@ -38,7 +38,7 @@ function Database(db){
         if(!res){
             return {error: "Something went wrong while generating a token"};
         }
-        return {success: res._id};
+        return res._id;
     };
 
     this.validateToken = async (token) => {
@@ -46,7 +46,7 @@ function Database(db){
         if(!existing){ return {error: "Token does not exist"}; }
         if(new Date().getTime() > existing.validUntil){ return {error: "Token has expired"}; }
         await db.collection("Tokens").updateOne({ _id: ObjectID(token) }, { $set: { validUntil: calculateTokenValidTime() } });
-        return {success: existing.username};
+        return existing.username;
     };
 
     this.getUser = async (token) => {
@@ -55,7 +55,7 @@ function Database(db){
 
         let user = await db.collection("Users").find({username: valid});
         if(!user){ return {error: "Something went wrong, user not found"}}
-        return {success: user};
+        return user;
     };
 
     this.addFavorite = async (token, favorite) => {
