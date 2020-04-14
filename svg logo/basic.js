@@ -9,6 +9,7 @@ window.onload = function() {
   const svg = d3.select('body')
                   .append('svg')
                   .attr("viewBox", [0, 0, width, height])
+                  .attr('id', 'logo')
                   .style("font", "10px sans-serif");
   
   // Append circles to svg
@@ -37,29 +38,23 @@ window.onload = function() {
 
   
   // Animate the circles on button click
-  let state = 0
-  d3.select("#button1")
-    .on('click', function() {
-      state = !state;
-      // Define animation here
-      d3.selectAll('circle')
-        .transition()
-        .attr('cx', (d, i) => 400 + state*d[2] )       
-        .attr('cy', (d, i) => 50 + state*d[3])
-        //.attr('fill', state ? '#1F4357' : '#CDB73A');
-        .attr("stroke", "white")
-        .attr("stroke-width", 3)
-        .style("fill", (d, i) => `url(#image${i})`);
+  // Define animation here
+  d3.selectAll('circle')
+    .transition()
+    .attr('cx', (d, i) => 400 + d[2] )       
+    .attr('cy', (d, i) => 50 + d[3])
+    //.attr('fill', state ? '#1F4357' : '#CDB73A');
+    .attr("stroke", "white")
+    .attr("stroke-width", 3)
+    .style("fill", (d, i) => `url(#image${i})`);
 
 
-      d3.selectAll('line')
-        .transition()
-        .attr('x2', (d, i) => 400 + state*d[2] + d[4])       
-        .attr('y2', (d, i) => 50 + state*d[3] + d[5])
-               .attr("fill", "#e75480")
-       .attr("stroke", "white")
-       .attr("stroke-width", 3);
-        //.attr('fill', state ? '#1F4357' : '#CDB73A');
-  });
+  d3.selectAll('line')
+    .transition()
+    .attr('x2', (d, i) => 400 + d[2] + d[4])       
+    .attr('y2', (d, i) => 50 + d[3] + d[5])
+           .attr("fill", "#e75480")
+   .attr("stroke", "white")
+   .attr("stroke-width", 3);
 
 }
