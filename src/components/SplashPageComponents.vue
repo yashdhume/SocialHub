@@ -5,7 +5,7 @@
                 <v-row>
                     <v-col align="center"
                            justify="center"
-                           style="height: 1000px">
+                           style="height: 2000px">
                         <svg id="mySvg" width="80" height="80">
                             <defs id="mdef">
                                 <pattern id="image0" x="0" y="0" height="40" width="40">
@@ -22,7 +22,7 @@
                                 </pattern>
                             </defs>
                         </svg>
-                        <svg id="logoFinal" width="2350" height="300" viewBox="0 0 1000 80"></svg>
+                        <svg id="logoFinal" viewBox="0 0 800 100"></svg>
                         <!--
                         <v-img src="@/assets/SocialHubLogoWhite.png" max-width="500" max-height="500"></v-img>
                         -->
