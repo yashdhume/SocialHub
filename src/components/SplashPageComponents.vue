@@ -5,7 +5,7 @@
                 <v-row>
                     <v-col align="center"
                            justify="center"
-                           style="height: 2000px">
+                           style="height: 1000px">
                         <svg id="mySvg" width="80" height="80">
                             <defs id="mdef">
                                 <pattern id="image0" x="0" y="0" height="40" width="40">
@@ -23,9 +23,9 @@
                             </defs>
                         </svg>
                         <svg id="logoFinal" viewBox="0 0 800 100"></svg>
-                        <!--
-                        <v-img src="@/assets/SocialHubLogoWhite.png" max-width="500" max-height="500"></v-img>
-                        -->
+                        
+                        <v-img src="@/assets/SocialHubLogoWhiteName.png" max-width="500" max-height="500"></v-img>
+                        
                         <v-container></v-container>
                         <p class="text-center ma-5">All your favorite social media in one place.</p>
 
@@ -88,21 +88,23 @@
             .transition()
             .attr('cx', (d, i) => 400 + d[2] )       
             .attr('cy', (d, i) => 50 + d[3])
-            //.attr('fill', state ? '#1F4357' : '#CDB73A');
             .attr("stroke", "white")
             .attr("stroke-width", 3)
-            .style("fill", (d, i) => `url(#image${i})`);
+            .style("fill", (d, i) => `url(#image${i})`)
+            .duration(5000);
 
 
             d3.selectAll('line')
             .transition()
             .attr('x2', (d, i) => 400 + d[2] + d[4])       
             .attr('y2', (d, i) => 50 + d[3] + d[5])
-                   .attr("fill", "#e75480")
+            .attr("fill", "#e75480")
             .attr("stroke", "white")
-            .attr("stroke-width", 3);
+            .attr("stroke-width", 3)
+            .duration(5000);
         }
     }
+
 </script>
 
 <style scoped>
