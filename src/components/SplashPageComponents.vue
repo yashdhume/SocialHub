@@ -9,16 +9,16 @@
                         <svg id="mySvg" width="80" height="80">
                             <defs id="mdef">
                                 <pattern id="image0" x="0" y="0" height="40" width="40">
-                                    <image x="0" y="0" width="20" height="20" xlink:href="http://icons.iconarchive.com/icons/dtafalonso/android-l/256/Youtube-icon.png"></image>
+                                    <image x="0" y="0" width="20" height="20" xlink:href="@/assets/YoutubeIcon.png"></image>
                                 </pattern>
                                 <pattern id="image1" x="0" y="0" height="40" width="40">
-                                    <image x="0" y="0" width="20" height="20" xlink:href="https://s18955.pcdn.co/wp-content/uploads/2018/02/instagramimgnew.png"></image>
+                                    <image x="0" y="0" width="20" height="20" xlink:href="@/assets/InstagramIcon.png"></image>
                                 </pattern>
                                 <pattern id="image2" x="0" y="0" height="40" width="40">
-                                    <image x="0" y="0" width="20" height="20" xlink:href="https://www.shareicon.net/data/256x256/2017/06/22/887584_logo_512x512.png"></image>
+                                    <image x="0" y="0" width="20" height="20" xlink:href="@/assets/TwitterIcon.png"></image>
                                 </pattern>
                                 <pattern id="image3" x="0" y="0" height="40" width="40">
-                                    <image x="0" y="0" width="20" height="20" xlink:href="https://img.favpng.com/1/2/24/reddit-logo-youtube-png-favpng-Rukc5hsDFfci1sNk1LkFBccvW_t.jpg"></image>
+                                    <image x="0" y="0" width="20" height="20" xlink:href="@/assets/RedditIcon.jpg"></image>
                                 </pattern>
                             </defs>
                         </svg>
@@ -84,6 +84,9 @@
 
             // Animate the circles on button click
             // Define animation here
+            let circ = document.getElementsByTagName('circle');
+            console.log(circ);
+
             d3.selectAll('circle')
             .transition()
             .attr('cx', (d, i) => 400 + d[2] )       
@@ -91,7 +94,7 @@
             .attr("stroke", "white")
             .attr("stroke-width", 3)
             .style("fill", (d, i) => `url(#image${i})`)
-            .duration(5000);
+            .duration(100);
 
 
             d3.selectAll('line')
