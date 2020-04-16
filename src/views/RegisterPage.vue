@@ -1,9 +1,8 @@
 <template>
     <div id="app">
         <v-app id="inspire" style="background: linear-gradient(130deg, #FF0099, #493240);">
-            <AppBar :appBarBtns="appBarBtns"></AppBar>
+            <AppBar :is-logged-in="isLoggedIn" :username="username"></AppBar>
             <LoginBox :is-register="true"></LoginBox>
-
         </v-app>
     </div>
 
@@ -15,21 +14,13 @@
     export default {
         name: "LoginPage",
         components: {AppBar, LoginBox},
+        created(){
+            this.isLoggedIn= this.$store.getters.isLoggedIn;
+            this.username = this.$store.getters.username;
+        },
         data: ()=>({
-            appBarBtns: [
-                {
-                    text: "Login",
-                    route: "/loginPage",
-                },
-                {
-                    text: "Sign Up",
-                    route: "/registerPage",
-                },
-                {
-                    text: "About",
-                    route: "",
-                },
-            ],
+            isLoggedIn:false,
+            username: ''
         })
     }
 </script>

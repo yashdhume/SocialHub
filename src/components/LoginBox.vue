@@ -99,7 +99,6 @@
 
         }),
         methods: {
-
             enter: function(){
                 if(this.isRegister) {
                     axios.get(`http://localhost:3000/createUser?username=${this.userName}&password=${this.password}`).then(r => {
@@ -112,7 +111,7 @@
                 else{
                     axios.get(`http://localhost:3000/signIn?username=${this.userName}&password=${this.password}`).then(r => {
                         if (r.data!==undefined){
-                            this.$store.commit('LoginSuccessful', r.data);
+                            this.$store.commit('LoginSuccessful', r.data, this.userName);
                             router.push("/searchPage");
                         }
                         else this.r = r.data.error

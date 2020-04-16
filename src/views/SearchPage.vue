@@ -1,6 +1,6 @@
 <template>
     <v-app style="background: linear-gradient(130deg, #FF0099, #493240);">
-        <AppBar :appBarBtns="appBarBtns"></AppBar>
+        <AppBar :is-logged-in="isLoggedIn" :username="username"></AppBar>
         <section v-if="isSearchesLoaded">
             <v-container style="width: 620px">
                 <v-row align="center">
@@ -15,8 +15,8 @@
                             prepend-inner-icon="mdi-magnify"
                     >
                     </v-combobox>
-                    <v-icon v-on:click="changeFav" :color="isFavorite ? 'white' : 'blue'">fas fa-star</v-icon>
                 </v-row>
+                <custom-search></custom-search>
             </v-container>
         </section>
 
@@ -34,13 +34,16 @@
     import AppBar from "@/components/AppBar";
     import Posts from "@/components/Posts";
     import ProfileInfo from "@/components/ProfileInfo";
+    import CustomSearch from "@/components/CustomSearch";
     import axios from 'axios'
     export default {
         name: "SearchPage",
-        components: {AppBar, Posts, ProfileInfo},
+        components: {AppBar, Posts, ProfileInfo, CustomSearch},
         created (){
             this.getRecentSearches();
-            this.favorite()
+            this.favorite();
+            this.isLoggedIn= this.$store.getters.isLoggedIn;
+            this.username = this.$store.getters.username;
         },
         methods:{
             changeFav: function(){
@@ -76,6 +79,8 @@
             },
         },
         data: ()=>({
+            username: '',
+            isLoggedIn: false,
             isFavorite: false,
             favorites: [],
             searches: [],
@@ -85,20 +90,6 @@
             isDataLoaded: false,
             posts:[],
             profileInfo:[],
-            appBarBtns: [
-                {
-                    text: "Login",
-                    route: "/loginPage",
-                },
-                {
-                    text: "Sign Up",
-                    route: "/registerPage",
-                },
-                {
-                    text: "About",
-                    route: "",
-                },
-            ],
         })
     }
 </script>
