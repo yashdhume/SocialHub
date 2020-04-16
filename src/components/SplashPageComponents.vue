@@ -23,15 +23,24 @@
                             </defs>
                         </svg>
                         <svg id="logoFinal" viewBox="0 0 800 100"></svg>
-                        
+
                         <v-img src="@/assets/SocialHubLogoWhiteName.png" max-width="500" max-height="500"></v-img>
-                        
+
                         <v-container></v-container>
                         <p class="text-center ma-5">All your favorite social media in one place.</p>
 
                         <v-col>
-                            <v-btn class="ma-5" outlined>Get Started</v-btn>
-                            <v-btn class="ma-5" outlined to="/SearchPage">Lets go</v-btn>
+
+                            <v-btn class="ma-5" outlined to="/searchPage">Lets go</v-btn>
+                                <v-bottom-sheet v-model="sheet" inset>
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn class="ma-5" outlined v-on="on">Customer Support</v-btn>
+                                    </template>
+                                    <v-sheet class="text-center">
+                                        <v-container  style="height: 100px"></v-container>
+                                        <ChatBox></ChatBox>
+                                    </v-sheet>
+                                </v-bottom-sheet>
                         </v-col>
                     </v-col>
                 </v-row>
@@ -40,76 +49,64 @@
 
     </div>
 </template>
-    
+
 <script src="https://d3js.org/d3.v5.min.js"></script>
 
 <script>
+    import ChatBox from "@/components/ChatBox";
     export default {
         name: "SplashPageComponents",
-
+        components:{ChatBox},
         mounted(){
             let data = [[400, 50, -30, -25, 10], [400, 50, 30, -25, 10], [400, 50, -30, 25, 10], [400, 50, 30, 25, 10], [400, 50, 0, 0, 15]];
             let data2 = [[400, 50, -30, -25, 6, 6, -10, -10], [400, 50, 30, -25, -6, 6, 10, -10], [400, 50, -30, 25, 6, -6, -10, 10], [400, 50, 30, 25, -6, -6, 10, 10]];
-
             let height = 500
             let width = 800
-
             const svg = d3.select('#logoFinal')
-                          .style("font", "10px sans-serif");
-
+                .style("font", "10px sans-serif");
             // Append circles to svg
             let circles = svg.selectAll("circle")
-                      .data(data)
-                      .enter()
-                      .append("circle");
-
+                .data(data)
+                .enter()
+                .append("circle");
             // Set circle attributes
-            circles.attr("r", (d, i) => d[4])
-               .attr("cx", (d, i) => d[0])
-               .attr("cy", (d, i) => d[1])
-               .attr("fill", "transparent")
-
+            circles.attr("r", d => d[4])
+                .attr("cx", d => d[0])
+                .attr("cy", d => d[1])
+                .attr("fill", "transparent")
             // Append lines to svg
             let lines = svg.selectAll("line")
-                      .data(data2)
-                      .enter()
-                      .append("line");
-
+                .data(data2)
+                .enter()
+                .append("line");
             // Set line attributes
-            lines.attr("x1", (d, i) => d[0]  + d[6])
-               .attr("y1", (d, i) => d[1]  + d[7])
-               .attr("x2", (d, i) => d[0])
-               .attr("y2", (d, i) => d[1])
-
-
+            lines.attr("x1", d => d[0]  + d[6])
+                .attr("y1", d=> d[1]  + d[7])
+                .attr("x2", d => d[0])
+                .attr("y2", d => d[1])
             // Animate the circles on button click
             // Define animation here
             let circ = document.getElementsByTagName('circle');
             console.log(circ);
-
             d3.selectAll('circle')
-            .transition()
-            .attr('cx', (d, i) => 400 + d[2] )       
-            .attr('cy', (d, i) => 50 + d[3])
-            .attr("stroke", "white")
-            .attr("stroke-width", 3)
-            .style("fill", (d, i) => `url(#image${i})`)
-            .duration(100);
-
-
+                .transition()
+                .attr('cx', d => 400 + d[2] )
+                .attr('cy', d => 50 + d[3])
+                .attr("stroke", "white")
+                .attr("stroke-width", 3)
+                .style("fill", (d,i) => `url(#image${i})`)
+                .duration(100);
             d3.selectAll('line')
-            .transition()
-            .attr('x2', (d, i) => 400 + d[2] + d[4])       
-            .attr('y2', (d, i) => 50 + d[3] + d[5])
-            .attr("fill", "#e75480")
-            .attr("stroke", "white")
-            .attr("stroke-width", 3)
-            .duration(5000);
+                .transition()
+                .attr('x2', d => 400 + d[2] + d[4])
+                .attr('y2', d => 50 + d[3] + d[5])
+                .attr("fill", "#e75480")
+                .attr("stroke", "white")
+                .attr("stroke-width", 3)
+                .duration(5000);
         }
     }
-
 </script>
 
 <style scoped>
-
 </style>
