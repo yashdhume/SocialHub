@@ -89,6 +89,9 @@
                 else if(str==="Youtube"){
                     return ["fab fa-youtube", "red"]
                 }
+                else if(str==="Twitter"){
+                    return ["fab fa-twitter", "blue"]
+                }
             }
         },
     }

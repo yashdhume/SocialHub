@@ -26,7 +26,7 @@ async function fullSearch(name){
         fullData.accountInfo[key] = data.accountInfo;
     }
 
-    fullData.posts.sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp));
+    fullData.posts = fullData.posts.sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp));
 
     return fullData;
 }
