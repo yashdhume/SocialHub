@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <v-app id="inspire" style="background: linear-gradient(130deg, #FF0099, #493240);">
-            <AppBar :appBarBtns="appBarBtns"></AppBar>
+            <AppBar></AppBar>
             <LoginBox :is-register="false"></LoginBox>
 
         </v-app>
@@ -16,20 +16,6 @@
         name: "LoginPage",
         components: {AppBar, LoginBox},
         data: ()=>({
-            appBarBtns: [
-                {
-                    text: "Login",
-                    route: "/loginPage",
-                },
-                {
-                    text: "Sign Up",
-                    route: "/registerPage",
-                },
-                {
-                    text: "About",
-                    route: "",
-                },
-            ],
         })
     }
 </script>

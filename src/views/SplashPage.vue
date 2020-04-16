@@ -1,6 +1,6 @@
 <template>
     <v-app style="background: linear-gradient(130deg, #FF0099, #493240);">
-        <AppBar :appBarBtns="appBarBtns"></AppBar>
+        <AppBar></AppBar>
         <SplashPageComponents/>
     </v-app>
 </template>
@@ -12,22 +12,7 @@
         name: "SplashPage",
         components: {SplashPageComponents, AppBar},
         data: () => {
-            return {
-                appBarBtns: [
-                    {
-                        text: "Login",
-                        route: "/loginPage",
-                    },
-                    {
-                        text: "Sign Up",
-                        route: "/registerPage",
-                    },
-                    {
-                        text: "About",
-                        route: "",
-                    },
-                ],
-            }
+            return {}
         },
     }
 </script>

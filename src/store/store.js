@@ -5,14 +5,17 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state:{
-        token: ''
+        token: '',
+        isLoggedIn: false,
+
     },
     mutations:{
         LoginSuccessful(state, token){
+            state.isLoggedIn = true;
             state.token = token;
         }
     },
     getters:{
-        token: state => state.token
+        token: state => state.token,
     }
-})
+});

@@ -1,6 +1,6 @@
 <template>
     <v-app style="background: linear-gradient(130deg, #FF0099, #493240);">
-        <AppBar :appBarBtns="appBarBtns"></AppBar>
+        <AppBar></AppBar>
         <section v-if="isSearchesLoaded">
             <v-container style="width: 620px">
                 <v-row align="center">
@@ -85,20 +85,6 @@
             isDataLoaded: false,
             posts:[],
             profileInfo:[],
-            appBarBtns: [
-                {
-                    text: "Login",
-                    route: "/loginPage",
-                },
-                {
-                    text: "Sign Up",
-                    route: "/registerPage",
-                },
-                {
-                    text: "About",
-                    route: "",
-                },
-            ],
         })
     }
 </script>

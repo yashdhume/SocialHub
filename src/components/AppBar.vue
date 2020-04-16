@@ -20,9 +20,25 @@
 <script>
     export default {
         name: "AppBar",
-        props: {
-            appBarBtns: Array,
-        }
+        props:{
+
+        },
+        data:()=>({
+            appBarBtns: [
+                {
+                    text: "Login",
+                    route: "/loginPage",
+                },
+                {
+                    text: "Sign Up",
+                    route: "/registerPage",
+                },
+                {
+                    text: "About",
+                    route: "",
+                },
+            ],
+        }),
     }
 </script>
 
