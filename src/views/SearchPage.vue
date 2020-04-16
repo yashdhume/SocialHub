@@ -1,6 +1,6 @@
 <template>
     <v-app style="background: linear-gradient(130deg, #FF0099, #493240);">
-        <AppBar></AppBar>
+        <AppBar :is-logged-in="isLoggedIn" :username="username"></AppBar>
         <section v-if="isSearchesLoaded">
             <v-container style="width: 620px">
                 <v-row align="center">
@@ -40,7 +40,9 @@
         components: {AppBar, Posts, ProfileInfo},
         created (){
             this.getRecentSearches();
-            this.favorite()
+            this.favorite();
+            this.isLoggedIn= this.$store.getters.isLoggedIn;
+            this.username = this.$store.getters.username;
         },
         methods:{
             changeFav: function(){
@@ -76,6 +78,8 @@
             },
         },
         data: ()=>({
+            username: '',
+            isLoggedIn: false,
             isFavorite: false,
             favorites: [],
             searches: [],
