@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const { ObjectID } = require("mongodb");
 
 function calculateTokenValidTime() {
     return new Date().getTime() + 1000 * 60 * 10; //10 minutes
@@ -42,10 +41,10 @@ function Database(db){
     };
 
     this.validateToken = async (token) => {
-        let existing = await db.collection("Tokens").findOne({ _id: ObjectID(token) });
+        let existing = await db.collection("Tokens").findOne({ _id: token });
         if(!existing){ return {error: "Token does not exist"}; }
         if(new Date().getTime() > existing.validUntil){ return {error: "Token has expired"}; }
-        await db.collection("Tokens").updateOne({ _id: ObjectID(token) }, { $set: { validUntil: calculateTokenValidTime() } });
+        await db.collection("Tokens").updateOne({ _id: token}, { $set: { validUntil: calculateTokenValidTime() } });
         return existing.username;
     };
 

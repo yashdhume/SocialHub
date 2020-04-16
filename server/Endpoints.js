@@ -30,7 +30,7 @@ function Endpoints(db) {
         let vars = loadVariables(req, res, ["token", "presetID"]);
         if(!vars){ return; }
 
-        let preset = await db.getPreset(vars.token, ObjectID(vars.presetID));
+        let preset = await db.getPreset(ObjectID(vars.token), ObjectID(vars.presetID));
         if(preset.error){
             res.send(preset);
             return;
@@ -64,21 +64,21 @@ function Endpoints(db) {
         let vars = loadVariables(req, res, ["token", "presetID"]);
         if(!vars){ return; }
 
-        res.send(await db.getPreset(vars.token, ObjectID(vars.presetID)));
+        res.send(await db.getPreset(ObjectID(vars.token), ObjectID(vars.presetID)));
     };
 
     this.getPresets = async (req, res) => {
         let vars = loadVariables(req, res, ["token"]);
         if(!vars){ return; }
 
-        res.send(await db.getPresets(vars.token))
+        res.send(await db.getPresets(ObjectID(vars.token)))
     };
 
     this.createPreset = async (req, res) => {
-        let vars = loadVariables(req, res, ["token", "preset"]);
+        let vars = loadVariables(req, res, ["token", "name"]);
         if(!vars){ return; }
 
-        res.send(await db.addPreset(vars.token, vars.preset));
+        res.send(await db.addPreset(ObjectID(vars.token), vars.name));
     };
 
     this.editPreset = async (req, res) => {
@@ -93,14 +93,14 @@ function Endpoints(db) {
             return;
         }
 
-        res.send(await db.editPreset(vars.token, ObjectID(vars.presetID), vars.usernames));
+        res.send(await db.editPreset(ObjectID(vars.token), ObjectID(vars.presetID), vars.usernames));
     };
 
     this.deletePreset = async (req, res) => {
         let vars = loadVariables(req, res, ["token", "presetID"]);
         if(!vars){ return; }
 
-        res.send(await db.removePreset(vars.token, ObjectID(vars.presetID)));
+        res.send(await db.removePreset(ObjectID(vars.token), ObjectID(vars.presetID)));
     };
 }
 
