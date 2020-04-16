@@ -1,4 +1,4 @@
-const {fullSearch} = require("./api/apis");
+const {fullSearch, search} = require("./api/apis");
 const {ObjectID} = require("mongodb");
 
 function loadVariables(req, res, varNames){
@@ -24,6 +24,19 @@ function Endpoints(db) {
         }
 
         res.send(await fullSearch(vars.name));
+    };
+
+    this.presetSearch = async (req, res) => {
+        let vars = loadVariables(req, res, ["token", "presetID"]);
+        if(!vars){ return; }
+
+        let preset = await db.getPreset(vars.token, ObjectID(vars.presetID));
+        if(preset.error){
+            res.send(preset);
+            return;
+        }
+
+        res.send(await search(preset.usernames));
     };
 
     this.recentSearches = async (req, res) => {

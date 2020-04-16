@@ -10,15 +10,19 @@ let sites = {
 	"Twitter": searchTwitter,
 };
 
-async function fullSearch(name){
+async function search(usernames){
     let fullData = {
         accountInfo: {},
         posts: [],
     };
 
     for(let key of Object.keys(sites)){
+        let name = usernames[key];
+        if(!name){ continue; }
         let data = await sites[key](name);
         if(!data){ continue; }
+
+        console.log(key, name);
 
         data.posts.forEach(i => { i.site = key });
 
@@ -31,4 +35,12 @@ async function fullSearch(name){
     return fullData;
 }
 
-module.exports = {fullSearch};
+async function fullSearch(name){
+    let usernames = {};
+    for(let key of Object.keys(sites)) {
+        usernames[key] = name;
+    }
+    return await search(usernames);
+}
+
+module.exports = {fullSearch, search};

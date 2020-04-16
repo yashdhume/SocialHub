@@ -44,6 +44,8 @@ client.connect().then(_ => {
         next();
     });
 
+    app.get("/presetSearch", endpoints.presetSearch);
+
     app.get("/getPreset", endpoints.getPreset);
     app.get("/getPresets", endpoints.getPresets);
     app.post("/createPreset", endpoints.createPreset);
