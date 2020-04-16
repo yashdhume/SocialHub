@@ -15,8 +15,8 @@
                             prepend-inner-icon="mdi-magnify"
                     >
                     </v-combobox>
-                    <v-icon v-on:click="changeFav" :color="isFavorite ? 'white' : 'blue'">fas fa-star</v-icon>
                 </v-row>
+                <custom-search></custom-search>
             </v-container>
         </section>
 
@@ -34,10 +34,11 @@
     import AppBar from "@/components/AppBar";
     import Posts from "@/components/Posts";
     import ProfileInfo from "@/components/ProfileInfo";
+    import CustomSearch from "@/components/CustomSearch";
     import axios from 'axios'
     export default {
         name: "SearchPage",
-        components: {AppBar, Posts, ProfileInfo},
+        components: {AppBar, Posts, ProfileInfo, CustomSearch},
         created (){
             this.getRecentSearches();
             this.favorite();

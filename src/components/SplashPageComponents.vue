@@ -4,7 +4,9 @@
             <v-flex ce>
                 <v-row>
                     <v-col align="center"
-                           justify="center">
+                           justify="center"
+                           style="height: 1000px"
+                    >
                         <svg id="mySvg" width="80" height="80">
                             <defs id="mdef">
                                 <pattern id="image0" x="0" y="0" height="40" width="40">
@@ -52,7 +54,6 @@
                 </v-row>
             </v-flex>
         </v-container>
-
     </div>
 </template>
 
@@ -61,46 +62,37 @@
 <script>
     import ChatBox from "@/components/ChatBox";
     export default {
-
         name: "SplashPageComponents",
         components:{ChatBox},
         mounted() {
             let data = [[400, 50, -30, -25, 10], [400, 50, 30, -25, 10], [400, 50, -30, 25, 10], [400, 50, 30, 25, 10], [400, 50, 0, 0, 15]];
             let data2 = [[400, 50, -30, -25, 6, 6, -10, -10], [400, 50, 30, -25, -6, 6, 10, -10], [400, 50, -30, 25, 6, -6, -10, 10], [400, 50, 30, 25, -6, -6, 10, 10]];
-
             const svg = d3.select('#logoFinal')
                 .style("font", "10px sans-serif");
-
             // Append circles to svg
             let circles = svg.selectAll("circle")
                 .data(data)
                 .enter()
                 .append("circle");
-
             // Set circle attributes
             circles.attr("r", d => d[4])
                 .attr("cx", d => d[0])
                 .attr("cy", d => d[1])
                 .attr("fill", "white")
-
             // Append lines to svg
             let lines = svg.selectAll("line")
                 .data(data2)
                 .enter()
                 .append("line");
-
             // Set line attributes
             lines.attr("x1", d => d[0] + d[6])
                 .attr("y1", d => d[1] + d[7])
                 .attr("x2", d => d[0])
                 .attr("y2", d => d[1])
-
-
             // Animate the circles on button click
             // Define animation here
             let circ = document.getElementsByTagName('circle');
             console.log(circ);
-
             d3.selectAll('circle')
                 .transition()
                 .attr('cx', d => 400 + d[2])
@@ -109,8 +101,6 @@
                 .attr("stroke-width", 3)
                 .style("fill", (d, i) => `url(#image${i})`)
                 .duration(1500);
-
-
             d3.selectAll('line')
                 .transition()
                 .attr('x2', d => 400 + d[2] + d[4])
@@ -121,9 +111,7 @@
                 .duration(1500);
         }
     }
-
 </script>
 
 <style scoped>
-
 </style>
