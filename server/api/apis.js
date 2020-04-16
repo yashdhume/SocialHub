@@ -1,11 +1,13 @@
 const {searchInstagram} = require("./instagramApi");
 const {searchReddit} = require("./redditApi");
 const {searchYoutube} = require("./youtubeApi");
+const {searchTwitter} = require("./twitterApi");
 
 let sites = {
     "Reddit": searchReddit,
     "Instagram": searchInstagram,
     "Youtube": searchYoutube,
+	"Twitter": searchTwitter,
 };
 
 async function fullSearch(name){
