@@ -11,7 +11,7 @@
             <v-avatar left>
                 <v-icon>mdi-account-circle</v-icon>
             </v-avatar>
-            {{username}}
+            Logged in
         </v-chip>
         <v-btn
                 flat

@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <v-app id="inspire" style="background: linear-gradient(130deg, #FF0099, #493240);">
-            <AppBar></AppBar>
+            <AppBar  :is-logged-in="isLoggedIn" :username="username"></AppBar>
             <About></About>
         </v-app>
     </div>
@@ -14,6 +14,14 @@
     export default {
         name: "AboutPage",
         components: {AppBar, About},
+        created(){
+            this.isLoggedIn= this.$store.getters.isLoggedIn;
+            this.username = this.$store.getters.username;
+        },
+        data: ()=>({
+            isLoggedIn:false,
+            username: ""
+        })
     }
 </script>
 
