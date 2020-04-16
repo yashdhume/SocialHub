@@ -50,7 +50,7 @@
             search: String,
         },
         data: ()=>({
-            profileSites: ["Reddit", "Instagram",  "Youtube"]
+            profileSites: ["Reddit", "Instagram",  "Youtube", "Twitter"]
         }),
         methods:{
             favorite: function() {
