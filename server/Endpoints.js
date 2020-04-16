@@ -1,4 +1,5 @@
 const {fullSearch} = require("./api/apis");
+const {ObjectID} = require("mongodb");
 
 function loadVariables(req, res, varNames){
     let missing = varNames.find(i => !req.query[i]);
@@ -46,54 +47,48 @@ function Endpoints(db) {
         res.send(await db.createToken(vars.username, vars.password));
     };
 
-    this.getFavorites = async (req, res) => {
+    this.getPreset = async (req, res) => {
+        let vars = loadVariables(req, res, ["token", "presetID"]);
+        if(!vars){ return; }
+
+        res.send(await db.getPreset(vars.token, ObjectID(vars.presetID)));
+    };
+
+    this.getPresets = async (req, res) => {
         let vars = loadVariables(req, res, ["token"]);
         if(!vars){ return; }
 
-        let user = await db.getUser(vars.token);
-        if(user.error) {
-            res.send(user);
-            return;
-        }
-
-        res.send(user.favorites);
+        res.send(await db.getPresets(vars.token))
     };
 
-    this.addFavorite = async (req, res) => {
-        let vars = loadVariables(req, res, ["token", "favorite"]);
+    this.createPreset = async (req, res) => {
+        let vars = loadVariables(req, res, ["token", "preset"]);
         if(!vars){ return; }
 
-        let user = await db.getUser(vars.token);
-        if(user.error) {
-            res.send(user);
-            return;
-        }
-
-        if(user.favorites.includes(vars.favorite)){
-            res.send({ error: "New favorite is already one of this user's favorites"});
-            return;
-        }
-
-        res.send(await db.addFavorite(vars.token, vars.favorite));
+        res.send(await db.addPreset(vars.token, vars.preset));
     };
 
-    this.removeFavorite = async (req, res) => {
-        let vars = loadVariables(req, res, ["token", "favorite"]);
+    this.editPreset = async (req, res) => {
+        let vars = loadVariables(req, res, ["token", "presetID", "usernames"]);
         if(!vars){ return; }
 
-        let user = await db.getUser(vars.token);
-        if(user.error) {
-            res.send(user);
+        try{
+            vars.usernames = JSON.parse(vars.usernames);
+        }
+        catch (e) {
+            res.send({error: "Usernames JSON is not formatted correctly"});
             return;
         }
 
-        if(!user.favorites.includes(vars.favorite)){
-            res.send({ error: "Removed favorite is not one of this user's favorites"});
-            return;
-        }
+        res.send(await db.editPreset(vars.token, ObjectID(vars.presetID), vars.usernames));
+    };
 
-        res.send(await db.removeFavorite(vars.token, vars.favorite));
-    }
+    this.deletePreset = async (req, res) => {
+        let vars = loadVariables(req, res, ["token", "presetID"]);
+        if(!vars){ return; }
+
+        res.send(await db.removePreset(vars.token, ObjectID(vars.presetID)));
+    };
 }
 
 module.exports = { Endpoints };

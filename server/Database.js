@@ -58,22 +58,65 @@ function Database(db){
         return user;
     };
 
-    this.addFavorite = async (token, favorite) => {
+    this.getPreset = async (token, presetID) => {
         let user = await this.getUser(token);
         if(user.error){ return user; }
 
-        let res = await db.collection("Users").updateOne({ username: user.username }, { $addToSet: { favorites: favorite }});
-        if(!res){ return {error: "Something went wrong. Could not add favorite"} }
-        return {success: "Favorite was added"}
+        if(!user.presetIDs.map(pId => pId.toString()).includes(presetID.toString())){ return {error: "This user does not own this preset"}}
+
+        let res = await db.collection("Presets").findOne({_id: presetID});
+        if(!res){ return {error: "This preset does not exist"}}
+
+        return res;
     };
 
-    this.removeFavorite = async (token, favorite) => {
+    this.getPresets = async (token) => {
         let user = await this.getUser(token);
         if(user.error){ return user; }
 
-        let res = await db.collection("Users").updateOne({ username: user.username }, { $pull: { favorites: favorite }});
-        if(!res){ return {error: "Something went wrong. Could not remove favorite"} }
-        return {success: "Favorite was removed"}
+        return Promise.all(user.presetIDs.map(async presetID => await this.getPreset(token, presetID)));
+    };
+
+    this.addPreset = async (token, name) => {
+        let user = await this.getUser(token);
+        if(user.error){ return user; }
+
+        let res = await db.collection("Presets").insertOne({name: name, usernames: {}});
+        if(!res){ return {error: "Something went wrong. Could not create preset"} }
+
+        let res2 = await db.collection("Users").updateOne({username: user.username}, {$addToSet: {presetIDs: res.insertedId}});
+        if(!res2){ return {error: "Something went wrong. Could not link preset to user"} }
+
+        return {success: "Preset was created"}
+    };
+
+    this.editPreset = async (token, presetID, usernames) => {
+        let user = await this.getUser(token);
+        if(user.error){ return user; }
+
+        let existing = await this.getPreset(token, presetID);
+        if(existing.error){ return existing; }
+
+        let res = await db.collection("Presets").updateOne({_id: presetID}, {$set: {usernames: usernames}});
+        if(!res){ return {error: "Something went wrong. Could not edit preset"} }
+
+        return {success: "Preset was edited"}
+    };
+
+    this.removePreset = async (token, presetID) => {
+        let user = await this.getUser(token);
+        if(user.error){ return user; }
+
+        let existing = await this.getPreset(token, presetID);
+        if(existing.error){ return existing; }
+
+        let res = await db.collection("Presets").removeOne({_id: presetID});
+        if(!res){ return {error: "Something went wrong. Could not remove preset"} }
+
+        let res2 = await db.collection("Users").updateOne({username: user.username}, {$pull: {presetIDs: presetID}});
+        if(!res2){ return {error: "Something went wrong. Could not unlink preset from user"} }
+
+        return {success: "Preset was removed"}
     }
 }
 

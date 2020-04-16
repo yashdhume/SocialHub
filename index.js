@@ -31,8 +31,8 @@ client.connect().then(_ => {
     app.get("/search", endpoints.search);
     app.get("/recentSearches", endpoints.recentSearches);
 
-    app.get("/createUser", endpoints.createUser);
-    app.get("/signIn", endpoints.signIn);
+    app.post("/createUser", endpoints.createUser);
+    app.post("/signIn", endpoints.signIn);
 
     //privileged access
     app.use(function(req, res, next) {
@@ -44,10 +44,11 @@ client.connect().then(_ => {
         next();
     });
 
-    //privileged access
-    app.get("/getFavorites", endpoints.getFavorites);
-    app.get("/addFavorite", endpoints.addFavorite);
-    app.get("/removeFavorite", endpoints.removeFavorite);
+    app.get("/getPreset", endpoints.getPreset);
+    app.get("/getPresets", endpoints.getPresets);
+    app.post("/createPreset", endpoints.createPreset);
+    app.post("/editPreset", endpoints.editPreset);
+    app.delete("/deletePreset", endpoints.deletePreset);
 
     httpServer.listen(port);
     console.log("App listening on port "+port);
