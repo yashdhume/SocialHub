@@ -16,7 +16,11 @@
                     >
                     </v-combobox>
                 </v-row>
-                <custom-search></custom-search>
+                <v-row>
+                    <custom-search></custom-search>
+                    <v-icon v-on:click="customSearch">mdi-magnify</v-icon>
+                </v-row>
+
             </v-container>
         </section>
 
@@ -42,8 +46,19 @@
         created (){
             this.getRecentSearches();
             this.favorite();
+
+        },
+        promise(){
+            this.customSearch()
         },
         methods:{
+            customSearch: function(){
+                let data= this.$store.getters.data;
+                    this.posts=data.data.posts;
+                    this.profileInfo=data.data.accountInfo;
+                    this.isDataLoaded=true;
+
+            },
             changeFav: function(){
                // this.favorite();
                 this.isFavorite = !this.isFavorite;
