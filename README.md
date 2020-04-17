@@ -12,3 +12,5 @@ Frontend (VueJS), DHTML, Styling, Animation, Layout, AJAX, API setup - Yash Dhum
 Backend (NodeJS, Express), Databasing (MongoDB), Endpoints, Websockets, API integration - Vincent Galloro
 
 API setup, Research, Logo Design / Implementation (D3), About Page - Aabid Mitha
+
+For Regular search just hit enter after you type you search. For custom you need to be logged in. create a new custom search by clicking the plus icon. Add a name for your custom search. Edit your custom search by adding tags for each soical media. Then click Search on the pop up then the search button beside the Custom Search button 
