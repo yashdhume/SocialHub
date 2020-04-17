@@ -1,29 +1,14 @@
-# Social Hub
+SocialHub
 
-## Project setup
-```
-npm install
-```
+The goal of our website, is to aggregate a content creators social media posts from across the web. Instead of having to navigate between dozens of different sites, SocialHub gives you a single feed with all of your favorite creators posts, pulled from all the major social media sites. 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+The first step of our process is the API calls, which pull data from across the web. This happens dynamically when a search is entered. For users that sign up with the site, you are able to create preset searches. These presets let you manually enter the channel/profile names across social media sites (incase of different names), and quickly search your favorite content creators. 
 
-### Compiles and minifies for production
-```
-npm run build
-```
+There is also a "customer support" box on the main page which supports live chat features.
 
-### Run your tests
-```
-npm run test
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+Frontend (VueJS), DHTML, Styling, Animation, Layout, AJAX, API setup - Yash Dhume
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Backend (NodeJS, Express), Databasing (MongoDB), Endpoints, Websockets, API integration - Vincent Galloro
+
+API setup, Research, Logo Design / Implementation (D3), About Page - Aabid Mitha
