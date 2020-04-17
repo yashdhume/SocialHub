@@ -12,7 +12,7 @@
                     <v-container>
                         <v-row>
                             <v-list-item
-                                    v-for="i in fakeData"
+                                    v-for="i in presets"
                                     :key="i"
                             >
                                 <v-list-item-avatar>
@@ -20,7 +20,7 @@
                                 </v-list-item-avatar>
 
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="i.name"></v-list-item-title>
+                                    <v-list-item-title>{{i.name}}</v-list-item-title>
                                 </v-list-item-content>
 
                                 <v-list-item-action>
@@ -89,12 +89,13 @@
                         <v-text-field
                                 label="Enter a Custom Name"
                                 single-line
+                                v-model="addCustomSearchName"
                         ></v-text-field>
                     </v-card-text>
                     <v-btn
                             color="primary"
                             text
-                            @click="dialog = true, dialog2=false"
+                            @click="createPreset"
                     >
                         Enter
                     </v-btn>
@@ -105,16 +106,41 @@
 </template>
 
 <script>
+
+    import axios from 'axios'
     export default {
         name: "CustomSearchCreate",
         data: () => ({
             dialog: false,
             dialog2: false,
-            fakeData: [
-                {name: "as"},
-                {name: "asd"}
-            ]
-        })
+            presets: null,
+            addCustomSearchName: ""
+        }),
+        created(){
+            this.getPreset()
+        },
+        methods:{
+            getPreset: function () {
+                axios.get(`http://localhost:3000/getPresets`, {headers:{'token': this.$store.getters.token}}).then(r => {
+                   this.presets = r.data;
+
+                });
+
+            },
+            editPreset: function (id) {
+                axios.post(`http://localhost:3000/editPreset?name=${id}`, {headers:{'token': this.$store.getters.token}}).then(r => {
+                    this.presets = r.data;
+
+                });
+            },
+            createPreset: function () {
+                this.dialog = false;
+                this.dialog2=false;
+                console.log(this.$store.getters.token);
+                axios.post(`http://localhost:3000/createPreset?preset=${this.addCustomSearchName}`, {headers:{'token': this.$store.getters.token}}).then(r=>{console.log(r)});
+
+            }
+        }
     }
 </script>
 

@@ -1,23 +1,11 @@
 <template>
     <v-app-bar flat color="transparent" clipped-right id="AppBar">
         <v-spacer></v-spacer>
-        <v-chip
-                v-if="isLoggedIn"
-                class="ma-2"
-                color="white"
-                text-color="white"
-                outlined
-        >
-            <v-avatar left>
-                <v-icon>mdi-account-circle</v-icon>
-            </v-avatar>
-            Logged in
-        </v-chip>
         <v-btn
                 flat
                 color="transparent white--text"
                 elevation="0"
-                v-for="i in isLoggedIn ?appBarLoggedIn: appBarBtns"
+                v-for="i in appBarBtns"
                 :key="i"
                 :to="i.route">
             {{i.text}}
@@ -32,17 +20,7 @@
 <script>
     export default {
         name: "AppBar",
-        props:{
-          isLoggedIn: Boolean,
-            username: String,
-        },
         data:()=>({
-            appBarLoggedIn:[
-                {
-                    text: "About",
-                    route: "/aboutPage",
-                },
-            ],
             appBarBtns: [
                 {
                     text: "Login",
