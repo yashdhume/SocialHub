@@ -36,6 +36,11 @@ function Endpoints(db) {
             return;
         }
 
+        let success = await db.logPresetSearch(vars.presetID);
+        if(!success){
+            console.log("Error: Something went wrong. Search was not logged");
+        }
+
         res.send(await search(preset.usernames));
     };
 

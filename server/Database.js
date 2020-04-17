@@ -11,6 +11,11 @@ function Database(db){
         return res.result.ok === 1;
     };
 
+    this.logPresetSearch = async (presetID) => {
+        let res = await db.collection("Searches").insertOne({ searchPresetID: presetID, timestamp: new Date().getTime() });
+        return res.result.ok === 1;
+    };
+
     this.getRecentSearches = async (searchCount) => {
         return Array.from(await db.collection("Searches").find().sort({ timestamp: -1 }).limit(searchCount).toArray());
     };
