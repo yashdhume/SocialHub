@@ -50,7 +50,7 @@
             },
             favorite: function(){
                 axios
-                    .get(`http://localhost:3000/getFavorites`, {headers:{'token': this.$store.getters.token}})
+                    .get(`https://socialhub1.herokuapp.com/getFavorites`, {headers:{'token': this.$store.getters.token}})
                     .then(r=>{
                         this.favorites = r.data;
                         this.isFavorite=true;
@@ -58,7 +58,7 @@
             },
             getRecentSearches: function(){
                 axios
-                    .get(`http://localhost:3000/recentSearches?amount=100`)
+                    .get(`https://socialhub1.herokuapp.com/recentSearches?amount=100`)
                     .then(r=>{
                         this.isSearchesLoaded=true;
                         r.data.forEach((data)=> {
@@ -68,7 +68,7 @@
             },
             getData: function(){
                 axios
-                    .get(`http://localhost:3000/search?name=${this.searchQuery}`)
+                    .get(`https://socialhub1.herokuapp.com/search?name=${this.searchQuery}`)
                     .then(r=>{
                         this.posts=r.data.posts;
                         this.profileInfo=r.data.accountInfo;

@@ -121,14 +121,14 @@
         },
         methods:{
             getPreset: function () {
-                axios.get(`http://localhost:3000/getPresets`, {headers:{'token': this.$store.getters.token}}).then(r => {
+                axios.get(`https://socialhub1.herokuapp.com/getPresets`, {headers:{'token': this.$store.getters.token}}).then(r => {
                    this.presets = r.data;
 
                 });
 
             },
             editPreset: function (id) {
-                axios.post(`http://localhost:3000/editPreset?name=${id}`, {headers:{'token': this.$store.getters.token}}).then(r => {
+                axios.post(`https://socialhub1.herokuapp.com/editPreset?name=${id}`, {headers:{'token': this.$store.getters.token}}).then(r => {
                     this.presets = r.data;
 
                 });
@@ -137,7 +137,7 @@
                 this.dialog = false;
                 this.dialog2=false;
                 console.log(this.$store.getters.token);
-                axios.post(`http://localhost:3000/createPreset?preset=${this.addCustomSearchName}`, {headers:{'token': this.$store.getters.token}}).then(r=>{console.log(r)});
+                axios.post(`https://socialhub1.herokuapp.com/createPreset?preset=${this.addCustomSearchName}`, {headers:{'token': this.$store.getters.token}}).then(r=>{console.log(r)});
 
             }
         }

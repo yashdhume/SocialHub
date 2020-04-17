@@ -2,9 +2,6 @@
     <section>
         <v-container style=" max-width: 620px;" align="center">
             <v-card light style="padding: 10px;">
-                <v-list-item-action>
-                    <v-icon v-on:click="favorite">fas fa-star</v-icon>
-                </v-list-item-action>
                 <v-row>
                     <v-flex v-for="i in profileSites" :key="i" class="justify-lg-space-around flex-row d-flex flex-row">
                           <v-card light  elevation="0" align="center">
@@ -53,9 +50,7 @@
             profileSites: ["Reddit", "Instagram",  "Youtube", "Twitter"]
         }),
         methods:{
-            favorite: function() {
-                axios.get(`http://localhost:3000/addFavorite?&favorite=${this.search}`, {headers:{'token': this.$store.getters.token}})
-            }
+
         }
     }
 </script>
