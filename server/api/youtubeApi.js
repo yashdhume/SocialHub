@@ -3,11 +3,11 @@ const {youtubeKey} = require("../configuration.js");
 
 async function searchYoutube(accountName){
     let getAccount= await (await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&forUsername=${accountName}&key=${youtubeKey}`)).json();
-    if(getAccount.items.length === 0){ return }
+    if(!getAccount.items || getAccount.items.length === 0){ return }
     let accountId = getAccount.items[0].id;
     let postData = await (await fetch(`https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=${accountId}&maxResults=25&key=${youtubeKey}`)).json();
     let accountData=await (await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${accountId}&key=${youtubeKey}`)).json();
-    if(!postData&&!accountData){ return null; }
+    if(!postData || !postData.items || !accountData){ return null; }
     let posts = postData.items.map(i => ({
         link: `http://youtube.com/watch?v=${i.id.videoId}`,
         image: i.snippet.thumbnails.high.url,
