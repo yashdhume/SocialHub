@@ -33,7 +33,7 @@
     export default {
         name: "ChatBox",
         data: () => ({
-            socket: new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host),
+            socket: new WebSocket("wss://socialhub1.herokuapp.com/"),
             message: {
                 text: "",
                 received: true
