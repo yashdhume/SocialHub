@@ -1,6 +1,6 @@
 <template>
     <v-app style="background: linear-gradient(130deg, #FF0099, #493240);">
-        <AppBar :is-logged-in="isLoggedIn" :username="username"></AppBar>
+        <AppBar></AppBar>
         <section v-if="isSearchesLoaded">
             <v-container style="width: 620px">
                 <v-row align="center">
@@ -42,8 +42,6 @@
         created (){
             this.getRecentSearches();
             this.favorite();
-            this.isLoggedIn= this.$store.getters.isLoggedIn;
-            this.username = this.$store.getters.username;
         },
         methods:{
             changeFav: function(){
@@ -52,7 +50,7 @@
             },
             favorite: function(){
                 axios
-                    .get(`http://localhost:3000/getFavorites`, {headers:{'token': this.$store.getters.token}})
+                    .get(`https://socialhub1.herokuapp.com/getFavorites`, {headers:{'token': this.$store.getters.token}})
                     .then(r=>{
                         this.favorites = r.data;
                         this.isFavorite=true;
@@ -60,7 +58,7 @@
             },
             getRecentSearches: function(){
                 axios
-                    .get(`http://localhost:3000/recentSearches?amount=100`)
+                    .get(`https://socialhub1.herokuapp.com/recentSearches?amount=100`)
                     .then(r=>{
                         this.isSearchesLoaded=true;
                         r.data.forEach((data)=> {
@@ -70,7 +68,7 @@
             },
             getData: function(){
                 axios
-                    .get(`http://localhost:3000/search?name=${this.searchQuery}`)
+                    .get(`https://socialhub1.herokuapp.com/search?name=${this.searchQuery}`)
                     .then(r=>{
                         this.posts=r.data.posts;
                         this.profileInfo=r.data.accountInfo;
@@ -79,7 +77,6 @@
             },
         },
         data: ()=>({
-            username: '',
             isLoggedIn: false,
             isFavorite: false,
             favorites: [],
