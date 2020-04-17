@@ -22,8 +22,6 @@ async function search(usernames){
         let data = await sites[key](name);
         if(!data){ continue; }
 
-        console.log(key, name);
-
         data.posts.forEach(i => { i.site = key });
 
         fullData.posts = fullData.posts.concat(data.posts);
